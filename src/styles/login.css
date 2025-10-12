@@ -1,0 +1,146 @@
+.style{
+    color: red;
+}
+.style2{
+    color: #4caf50;
+}
+
+body {
+    background-image: url('photo.gif');
+    background-color: #f4f4f9;
+    font-family: Arial, sans-serif;
+}
+
+nav.navbar {
+    padding-top: ;
+}
+
+.navbar a {
+    font-weight: bold;
+    margin-right: 15px;
+}
+
+.box {
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 50px auto;
+    width: 35%;
+    /* ✨ Animation added below */
+    animation: floatBox 1.5s ease-out;
+}
+.box:hover{
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+    transition: all 0.3s ease;  
+}
+
+/* ✨ Animation keyframes */
+@keyframes floatBox {
+    0% {
+        opacity: 0;
+        transform: translateY(-40px) scale(0.95);
+    }
+    60% {
+        opacity: 1;
+        transform: translateY(10px) scale(1.02);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+h2#heading1 {
+    color: #333;
+}
+
+.sai {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+#login {
+    background-color: #06ae38;
+    color: #fff;
+    padding-bottom: 1px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+#login:hover {
+    background-color: #15a5d5;
+}
+
+h5 a {
+    color: #4caf50;
+    text-decoration: none;
+}
+
+h5 a:hover {
+    text-decoration: underline;
+}
+
+/* Ensure navbar spans the full width */
+nav.navbar {
+  width: 100%;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding:;
+  position: relative;
+  width: 100vw;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 2rem 2rem;
+  box-sizing: border-box;
+  
+
+}
+
+/* Remove unwanted spacing on page */
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
+/* Force navbar to stretch full width */
+nav.navbar {
+  width: 100vw !important;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding-left: 0;
+  padding-right: 0;
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* Remove any default spacing */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Ensure the navbar background covers fully */
+.navbar.bg-dark {
+  background-color: #212529 !important;
+}
+.navbar {
+  background-color: #90caf9;
+  color: #002366;
+}
+.nav-link:hover {
+  color: #000;
+}
+
+html, body {
+  margin: 0 !important;
+  padding: 0 !important;
+}
