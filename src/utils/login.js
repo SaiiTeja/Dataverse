@@ -26,7 +26,7 @@ window.login = function () {
     errorEl.style.color = 'green';
     errorEl.innerText = 'Login successful! Redirecting...';
     setTimeout(() => {
-      window.open('/project/project.html', '_blank');
+      window.open('/project', '_blank');
     }, 2000);
   } else if (!userData) {
     errorEl.innerText = 'Username not found.';
@@ -121,7 +121,14 @@ window.retrieveSecurityQuestion = function () {
     // ✅ Show answer box smoothly
     questionLabel.innerText = 'Your Answer:';
     questionSection.style.display = 'block';
-    questionSection.style.opacity = '0';
+    questionSection.style.color = 'black';
+    questionLabel.innerText = 'Your Answer:';
+questionLabel.style.color = 'black'; // ✅ makes text black
+questionSection.style.display = 'block';
+questionSection.style.opacity = '0';
+questionSection.style.fontWeight = 'bold';
+
+
     setTimeout(() => {
       questionSection.style.opacity = '1';
     }, 10);
@@ -157,7 +164,8 @@ window.recoverPassword = function () {
   if (userData) {
     if (answer === userData.answer) {
       messageEl.innerText = `Your password is: ${userData.password}`;
-      messageEl.style.color = 'green';
+      messageEl.style.color = 'black';
+      messageEl.style.fontWeight = 'bold';
     } else {
       messageEl.innerText = 'Incorrect answer to the security question.';
       messageEl.style.color = 'red';

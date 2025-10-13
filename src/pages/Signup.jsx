@@ -20,21 +20,16 @@ function Signup() {
         aria-expanded="false" 
         aria-label="Toggle navigation">
 
-            <a href="#" onClick={()=>window.second()} className="btn btn-dark">Home</a>
-            <a href="#" onClick={()=>window.second()} className="btn btn-dark">About</a>
-            <a href="#" onClick={()=>window.second()} className="btn btn-dark">Contact</a>
-            <a href="#" onClick={()=>window.second()} className="btn btn-dark">Services</a>
-            <a href="#" onClick={()=>window.second()} className="btn btn-dark">Products</a>
-            <a href="#" onClick={()=>window.second()} className="btn btn-dark">Blog</a>
+           
         </button>
     </nav>
     <span>
-        <div className="box">
+        <div className="box2">
             <center><h2 id="heading2">Sign Up</h2></center>
             <p id="message"></p>
-            <p>Username: <input type="text" placeholder="Enter your username" id="newUsername" size="30" className="sai" required/></p>
-            <p>Password: <input type="password" placeholder="Enter your password" id="newPassword" size="30" required/></p>
-            <p>
+            <p className='text-dark fw-bold'>Username: <input type="text" placeholder="Enter your username" id="newUsername" size="30" className="sai" required/></p>
+            <p className='text-dark fw-bold'>Password: <input type="password" placeholder="Enter your password" id="newPassword" size="30" required/></p>
+            <p className='text-dark fw-bold'>
                 security question:- 
                 <select name="" id="securityQuestion">
 
@@ -49,8 +44,8 @@ function Signup() {
 
                 </select>
             </p>
-            <p>Answer:- <input type="text" name="" id="answer"/></p>
-          <p>  <center><button id="login" onClick={()=>window.signup()}><h2>Sign Up</h2></button> </center><a href="/"><button type="button" id="login" >Back to Login</button></a></p>
+            <p className='text-dark'>Answer:- <input type="text" name="" id="answer" placeholder='Enter your answer'/></p>
+          <p>  <center><button id="login" className='ram' onClick={()=>window.signup()}><h2>Sign Up</h2></button> </center><a href="/"><button type="button" id="login" >Back to Login</button></a></p>
             
         </div>
     </span>

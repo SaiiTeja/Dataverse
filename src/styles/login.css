@@ -7,8 +7,12 @@
 
 body {
     background-image: url('photo.gif');
-    background-color: #f4f4f9;
+    background-color: #9c9cb2;
     font-family: Arial, sans-serif;
+     background-repeat: no-repeat;       /* Don’t tile the image */
+    background-size: cover;             /* Make it cover the entire page */
+    background-position: center center; /* Center the image */
+    background-attachment: fixed;  
 }
 
 nav.navbar {
@@ -21,19 +25,31 @@ nav.navbar {
 }
 
 .box {
-    background-color: #fff;
+    background-color: #e7fafb11;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     padding: 20px;
     margin: 50px auto;
     width: 35%;
-    /* ✨ Animation added below */
     animation: floatBox 1.5s ease-out;
+    transition: all 0.3s ease; /* smooth transition for hover */
 }
-.box:hover{
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+.box2{
+    background-color: #e7fafb11;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 50px auto;
+    width: 35%;
+    animation: floatBox 1.5s ease-out;
+    transition: all 0.3s ease; /* smooth transition for hover */
+}
+
+/* Hover: subtle gray effect + lift */
+.box:hover {
+    background-color: #1bb9c573; /* light gray */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
     transform: translateY(-5px);
-    transition: all 0.3s ease;  
 }
 
 /* ✨ Animation keyframes */
@@ -52,18 +68,31 @@ nav.navbar {
     }
 }
 
+
 h2#heading1 {
-    color: #333;
+    color: #3f3d3d;
+}
+#names {
+    color: #3f3d3d;
+    font-size: large;
+    font-weight: bold;
 }
 
-.sai {
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+.saii {
+    padding: 10px !important;
+    border-radius: 5px !important;
+    border: 1px solid #ccc !important;
+    background-color: rgba(225, 223, 223, 0.728) !important;
+    color: rgb(0, 0, 0) !important; /* for text color */
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+    background-color:rgba(255, 255, 255, 0);
+    
 }
+
 
 #login {
-    background-color: #06ae38;
+    background-color: #285cf758;
     color: #fff;
     padding-bottom: 1px;
     border-radius: 5px;
@@ -76,7 +105,7 @@ h2#heading1 {
 }
 
 h5 a {
-    color: #4caf50;
+    color: #030716;
     text-decoration: none;
 }
 
@@ -90,13 +119,12 @@ nav.navbar {
   left: 0;
   right: 0;
   margin: 0;
-  padding:;
   position: relative;
   width: 100vw;
   left: 0;
   right: 0;
   margin: 0;
-  padding: 2rem 2rem;
+  padding: 2rem;
   box-sizing: border-box;
   
 
@@ -117,7 +145,7 @@ nav.navbar {
   padding-left: 0;
   padding-right: 0;
   position: relative;
-  box-sizing: border-box;
+  width: 100vw !important;
 }
 
 /* Remove any default spacing */
@@ -130,17 +158,81 @@ html, body {
 
 /* Ensure the navbar background covers fully */
 .navbar.bg-dark {
-  background-color: #212529 !important;
+  background-color: #21252959 !important;
 }
 .navbar {
   background-color: #90caf9;
-  color: #002366;
+  color: #ffffff;
+}
+
+.navbar-item:hover{
+    color: #ffffff !important;
 }
 .nav-link:hover {
-  color: #000;
+  color: #ffffff !important;
+}
+.nav-link{
+    font-size: large;
 }
 
 html, body {
   margin: 0 !important;
   padding: 0 !important;
+}
+/* Stronger selector for autofill */
+input.sai:-webkit-autofill,
+input.sai:-webkit-autofill:hover,
+input.sai:-webkit-autofill:focus,
+input.sai:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px white inset !important; /* background */
+    -webkit-text-fill-color: black !important;              /* text color */
+    caret-color: black !important;                           /* cursor color */
+    transition: background-color 5000s ease-in-out 0s !important;
+}
+
+/* Ensure normal state is also applied */
+input.sai {
+    
+    background-color: white !important;
+    color: black !important;
+}
+#pass{
+    color: rgb(54, 50, 50);
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#newUsername{
+    color: rgb(54, 50, 50);
+    font-weight: bold;
+    font-size: 18px;
+    background-color: white !important;
+    color: rgb(255, 255, 255) !important;
+    background-image: linear-gradient(rgb(255, 255, 255),white)!important;
+    background-clip:padding-box!important;
+}
+#newPassword{
+    color: rgb(17, 17, 17);
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 18px;
+    background-color: white !important;
+    color: rgb(255, 255, 255) !important;
+    background-image: linear-gradient(rgb(255, 255, 255),white)!important;
+    background-clip:padding-box!important;
+    text-align: center;
+}
+#answer{
+    color: rgb(17, 17, 17);
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 18px;
+    background-color: white !important;
+    color: rgb(255, 255, 255) !important;
+    background-image: linear-gradient(rgb(255, 255, 255),white)!important;
+    background-clip:padding-box!important;
+    text-align: center;
+}
+.ram{
+    margin-bottom: 5px;
 }

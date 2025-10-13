@@ -23,7 +23,8 @@ function Login() {
           </button>
 
           <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav ms-auto">
+            <ul className="navbar-nav ms-auto ">
+              
               {['Home', 'About', 'Contact', 'Services', 'Products', 'Blog'].map((label, index) => (
                 <li className="nav-item" key={index}>
                   <a className="nav-link" href="#" onClick={() => window.first()}>
@@ -42,24 +43,24 @@ function Login() {
         <p id="error"></p>
 
         <p>
-          Username:{" "}
+         <span id='names'> Username:</span>
           <input
             type="text"
             placeholder="Enter here"
             id="username"
             size="30"
-            className="sai"
+            className="saii"
             required
           />
         </p>
         <p>
-          Password:{" "}
+         <span id='names'>Password:</span>
           <input
             type="password"
             placeholder="Enter here"
             id="password"
             size="30"
-            className="sai"
+            className="saii"
             required
           />
         </p>
@@ -75,7 +76,7 @@ function Login() {
     }}
   />
   <label htmlFor="showPassword" style={{ margin: 0, padding: 0, lineHeight: '16px', cursor: 'pointer' }}>
-    Show Password
+   <span id='pass'> Show Password</span>
   </label>
 </div>
 
@@ -84,7 +85,7 @@ function Login() {
         <h5>
           <a href="/forget">Forgot Password?</a>
           <span style={{ float: 'right' }}>
-            <a href="/signup">Sign Up</a>
+            <a href="/signup">Sign Up?</a>
           </span>
         </h5>
 

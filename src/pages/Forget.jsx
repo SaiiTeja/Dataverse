@@ -5,17 +5,20 @@ import '../styles/styles.css';
 
 function Forget() {
   return (
-    <div className="container">
+    <div>
       <h2>Forgot Password</h2>
       <form id="forgotPasswordForm">
         <div className="form-group">
-          <label htmlFor="forget-username">Username:</label>
+          <h3>
+          <label htmlFor="forget-username" className='text-dark h5'>Username:</label></h3>
           <input
             type="text"
             id="forget-username"
             placeholder="Enter your username"
             required
+            className='mohi'
           />
+
         </div>
 
         {/* Security Question */}
@@ -49,6 +52,7 @@ function Forget() {
           type="button"
           onClick={() => window.retrieveSecurityQuestion()}
           style={{ marginRight: "10px" }}
+          className='revan'
         >
           Retrieve Security Question
         </button>
@@ -57,12 +61,13 @@ function Forget() {
           type="button"
           onClick={() => window.recoverPassword()}
           style={{ marginRight: "10px" }}
+          className='revan'
         >
           Recover Password
         </button>
 
         <a href="/">
-          <button type="button">Back to Login</button>
+          <button type="button" className='revan'>Back to Login</button>
         </a>
       </form>
     </div>

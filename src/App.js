@@ -2,6 +2,7 @@ import React from 'react'
 import Login from './pages/Login'
 import Forget from './pages/Forget'
 import Signup from './pages/Signup'
+import Project from './pages/Project'
 import {BrowserRouter, Routes,Route} from 'react-router-dom'
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
       <Route path='/' element={<Login/>}/>
       <Route path='/forget' element={<Forget/>}/>
       <Route path='/signup' element={<Signup/>}/>
+      <Route path='/project' element={<Project/>}/>
     </Routes>
     </BrowserRouter>
   )
