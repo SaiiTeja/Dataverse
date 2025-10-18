@@ -34,7 +34,7 @@ function Project() {
             <div className="collapse navbar-collapse" id="navbarNav">
               <ul className="navbar-nav ms-auto align-items-center">
                 <li className="nav-item">
-                  <a className="nav-link active" href="project.html">Home</a>
+                  <a className="nav-link active" href="/">Home</a>
                 </li>
                 <li className="nav-item">
                   <a className="nav-link" href="#" onClick={() => window.showText()}>About</a>
@@ -46,9 +46,9 @@ function Project() {
                   <a className="nav-link" href="#contacts">Contact</a>
                 </li>
                 <li className="nav-item d-flex align-items-center">
-                  <a className="nav-link d-flex align-items-center" href="#" onClick={() => window.showLogoutButton()}>
+                  <a className="nav-link d-flex align-items-center"  href="#" onClick={() => window.showLogoutButton()}>
                     <img src="/images/user.jpeg" id="user" alt="User" />
-                    <span id="user_name" className="ms-2">Sai Teja</span>
+                    <span id="username-display" className="ms-2">Sai Teja</span>
                   </a>
                 </li>
               </ul>
@@ -105,7 +105,7 @@ function Project() {
     ].map((dataset, index) => (
       <a
         key={dataset.id}
-        href="#heading"
+        href="#headingg"
         id={dataset.id}
         data-value={(index + 1).toString()}
         className="custom-card"
@@ -122,19 +122,45 @@ function Project() {
 
 
       {/* Dropdown */}
-      <div className="dropdown">
+      <div className="dropdown" id='headingg'>
         <button className="dropbtn">models</button>
         <div className="parent dropdown-content">
-          <a id="iris" href="#heading" data-value="1">iris dataset</a>
-          <a id="digits" href="#heading" data-value="2">written Digit dataset</a>
-          <a id="wine" href="#heading" data-value="3">wine datasets for logistic regression</a>
-          <a id="news" href="#heading" data-value="4">20 different news for classification</a>
-          <a id="diabates" href="#heading" data-value="5">diabates dataset for regression</a>
-          <a id="house" href="#heading" data-value="6">house price prediction</a>
-          <a id="face" href="#heading" data-value="7">face recognition dataset</a>
-          <a id="forest" href="#heading" data-value="8">classification for forest cover dataset</a>
-          <a id="network" href="#heading" data-value="9">network intrusion dataset</a>
-          <a id="circle" href="#heading" data-value="10">circle dataset for non-linear classification</a>
+          <a id="iris" href="#headingg" data-value="1">iris dataset</a>
+          <a id="digits" href="#headingg" data-value="2">written Digit dataset</a>
+          <a id="wine" href="#headingg" data-value="3">wine datasets for logistic regression</a>
+          <a id="news" href="#headingg" data-value="4">20 different news for classification</a>
+          <a id="diabates" href="#headingg" data-value="5">diabates dataset for regression</a>
+          <a id="house" href="#headingg" data-value="6">house price prediction</a>
+          <a id="face" href="#headingg" data-value="7">face recognition dataset</a>
+          <a id="forest" href="#headingg" data-value="8">classification for forest cover dataset</a>
+          <a id="network" href="#headingg" data-value="9">network intrusion dataset</a>
+          <a id="circle" href="#headingg" data-value="10">circle dataset for non-linear classification</a>
+
+          <a id="bitcoin" href="#headingg" data-value="11">Bitcoin Rates Dataset</a>
+          <a id="bmw" href="#headingg" data-value="12">BMW Car Sales Dataset</a>
+          <a id="brain_tumor" href="#headingg" data-value="13">Brain Tumor Detection Dataset</a>
+          <a id="breast_cancer" href="#headingg" data-value="14">Breast Cancer Classification Dataset</a>
+          <a id="clothes" href="#headingg" data-value="15">Clothing Sizes Dataset</a>
+          <a id="credit_fraud" href="#headingg" data-value="16">Credit Card Fraud Detection Dataset</a>
+          <a id="data_jobs" href="#headingg" data-value="17">Data-Related Jobs Dataset</a>
+          <a id="world_dev" href="#headingg" data-value="18">World Development Indicator Dataset</a>
+          <a id="world_edu" href="#headingg" data-value="19">World Education Modality Dataset</a>
+          <a id="energy" href="#headingg" data-value="20">Energy Consumption Dataset</a>
+          <a id="exchange" href="#headingg" data-value="21">World Exchange Rates Dataset</a>
+          <a id="health" href="#headingg" data-value="22">Global Health Statistics Dataset</a>
+          <a id="netflix" href="#headingg" data-value="23">Netflix Movie Recommendation Dataset</a>
+          <a id="amazon" href="#headingg" data-value="24">Amazon Reviews Dataset</a>
+          <a id="road" href="#headingg" data-value="25">Road Accidents Dataset</a>
+          <a id="spotify" href="#headingg" data-value="26">Spotify Music Recommendation Dataset</a>
+          <a id="taxi" href="#headingg" data-value="27">Taxi Fare Rates Dataset</a>
+          <a id="temperature" href="#headingg" data-value="28">Global Temperature Dataset</a>
+          <a id="titanic" href="#headingg" data-value="29">Titanic Survival Prediction Dataset</a>
+          <a id="gender" href="#headingg" data-value="30">World Bank Gender Statistics Dataset</a>
+          <a id="population" href="#headingg" data-value="31">World Population Dataset</a>
+          <a id="ranking" href="#headingg" data-value="32">World Ranking Dataset</a>
+          <a id="weather" href="#headingg" data-value="33">World Weather Dataset</a>
+          <a id="youtube" href="#headingg" data-value="34">YouTube Famous Channels Dataset</a>
+
           <a className="nav-link" href="#" onClick={() => window.toggleSideBox()}>AI box</a>
         </div>
       </div>

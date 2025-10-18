@@ -1,8 +1,43 @@
 // Datasets and code dictionary
 window.datasets = [
-  "iris data sets", "digits datasets", "wine datasets", "20 Newsgroups Dataset", "Diabetes Dataset",
-  "Boston Housing Dataset", "Olivetti Faces Dataset", "Covtype Dataset", "fetch_kddcup99", "make_circles"
+  "iris data sets",
+  "digits datasets",
+  "wine datasets",
+  "20 Newsgroups Dataset",
+  "Diabetes Dataset",
+  "Boston Housing Dataset",
+  "Olivetti Faces Dataset",
+  "Covtype Dataset",
+  "fetch_kddcup99",
+  "make_circles",
+
+  // newly added datasets 👇
+  "Bitcoin Rates Dataset",
+  "BMW Car Sales Dataset",
+  "Brain Tumor Detection Dataset",
+  "Breast Cancer Classification Dataset",
+  "Clothing Sizes Dataset",
+  "Credit Card Fraud Detection Dataset",
+  "Data Related Jobs Dataset",
+  "World Development Indicator Dataset",
+  "World Education Modality Dataset",
+  "Energy Consumption Dataset",
+  "World Exchange Rates Dataset",
+  "Global Health Statistics Dataset",
+  "Netflix Movie Recommendation Dataset",
+  "Amazon Reviews Dataset",
+  "Road Accidents Dataset",
+  "Spotify Music Recommendation Dataset",
+  "Taxi Fare Rates Dataset",
+  "Global Temperature Dataset",
+  "Titanic Survival Prediction Dataset",
+  "World Bank Gender Statistics Dataset",
+  "World Population Dataset",
+  "World Ranking Dataset",
+  "World Weather Dataset",
+  "YouTube Famous Channels Dataset"
 ];
+
 document.addEventListener('DOMContentLoaded', () => {
   const cards = document.querySelectorAll('.custom-card');
 
@@ -149,18 +184,62 @@ window.copycode = () => {
   alert("Code copied to clipboard");
 };
 
-window.showText = () => {
-  if (document.getElementById("slideText")) return;
+window.showText = (content) => {
+  // If a popup already exists, don’t create another
+  if (document.querySelector(".slide-in-text")) return;
+
+  const defaultText = `This website provides datasets for ML/DL problems in multiple formats, including sklearn predefined datasets and also provide the machine learning model to clean and preprocess the datasets `;
+  const popupContent = content || defaultText;
+
   const textDiv = document.createElement("div");
-  textDiv.id = "slideText";
-  textDiv.className = "slide-in-text show";
+  textDiv.className = "slide-in-text";
+
   textDiv.innerHTML = `
-    <span class="close-btn" onclick="window.hideText()">❌</span>
-    This website provides datasets for ML/DL problems in multiple formats, including sklearn predefined datasets.
+    <span class="close-btn">❌</span>
+    <div class="popup-content">${popupContent}</div>
   `;
+
+  // Style the popup
+  Object.assign(textDiv.style, {
+    position: "fixed",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    zIndex: 9999,
+    background: "#fff",
+    padding: "20px",
+    borderRadius: "10px",
+    boxShadow: "0 5px 15px rgba(0,0,0,0.3)",
+    maxWidth: "90%",
+    maxHeight: "80%",
+    overflowY: "auto",
+  });
+
+  // Style the close button
+  const closeBtn = textDiv.querySelector(".close-btn");
+  Object.assign(closeBtn.style, {
+    position: "absolute",
+    top: "10px",
+    right: "10px",
+    cursor: "pointer",
+    fontSize: "18px",
+    fontWeight: "bold",
+  });
+
+  // Append to body
   document.body.appendChild(textDiv);
+
+  // Optional slide-in animation
   setTimeout(() => textDiv.classList.add("show"), 10);
+
+  // Close event
+  closeBtn.addEventListener("click", () => {
+    textDiv.remove();
+  });
+
+  return textDiv;
 };
+
 
 window.hideText = () => {
   const textDiv = document.getElementById("slideText");
