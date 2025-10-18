@@ -1,6 +1,6 @@
 
 body {
-    background-image: url('photo.gif');
+    
     font-family: Arial, sans-serif;
     background-color: #f7f7f7;
     margin: 0;
@@ -55,7 +55,7 @@ button {
 }
 
 button:hover {
-    background: #00000058;
+    background: #0000005a;
 }
 
 #message {

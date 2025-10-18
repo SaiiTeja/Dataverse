@@ -7,9 +7,10 @@ function Login() {
   return (
     <div>
       {/* Navbar */}
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+     
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div className="container-fluid">
-          <a className="navbar-brand" href="#">Dataverse</a>
+          <a className="navbar-brand text-white" href="#">Dataverse</a>
           <button
             className="navbar-toggler"
             type="button"

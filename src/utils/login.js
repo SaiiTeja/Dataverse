@@ -2,7 +2,7 @@
 
 console.log("✅ login.js loaded successfully");
 
-// --- LOGIN FUNCTION ---
+
 window.login = function () {
   const username = document.getElementById('username')?.value;
   const password = document.getElementById('password')?.value;

@@ -1,14 +1,29 @@
-.sai{
+ .project-page .saiteja{
+    font-family: 'Courier New', Courier, monospace;
+    text-align: top;
+    margin-top: 0px;
+    background-image: linear-gradient(black,blue);
+    background-clip: content-box;
+    color: white;
+    flex-direction: flex;
+    direction: column;
+}
+ .project-page .name{
+    align-items: top;
+}
+ .project-page #navbar-id{
     font-family: 'Courier New', Courier, monospace;
     text-align: center;
     background-image: linear-gradient(black,blue);
     background-clip: content-box;
     color: white;
+    position: sticky;
 }
-.item{
+
+ .project-page .item{
     display: none;
 }
-.contact-title {
+ .project-page .contact-title {
     font-size: 24px;
     font-weight: bold;
     color: #333;
@@ -16,23 +31,27 @@
     padding: 10px;
     border-bottom: 2px solid #555;
 }
-fieldset {
+ .project-page fieldset {
     border: 2px solid #ccc;
     padding: 20px;
     border-radius: 8px;
     background-color: #f9f9f9;
 }
-.img{
+ .project-page .img{
 display: inline;
 }
-.img{
-    width: 3.5%;
-    height: 3.5%;
+ .project-page .img{
+    width: 4.5%;
+    height: 4.5%;
+    clip-path: ellipse(50% 55% at 50% 50%);
+  transform: rotate(-10deg);
+  transition: transform 0.3s ease;
+  filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.4));
 }
-#boxes{
+ .project-page #boxes{
     padding-left: 60px;
 }
-.dropdown {
+ .project-page .dropdown {
             position: relative;
             display: inline-block;
             left: 30%;
@@ -40,7 +59,7 @@ display: inline;
             padding-bottom: 3%;
         }
 
-        .dropbtn {
+     .project-page     .dropbtn {
             font-size: larger;
             background-size: 20%;
             background-color: #4CAF50;
@@ -53,7 +72,7 @@ display: inline;
             
         }
 
-        .dropdown-content {
+       .project-page   .dropdown-content {
             display: none;
             position: absolute;
             background-color: white;
@@ -62,27 +81,27 @@ display: inline;
             z-index: 1;
         }
 
-        .dropdown-content a {
+       .project-page   .dropdown-content a {
             color: rgb(0, 0, 0);
             padding: 10px;
             text-decoration: none;
             display: block;
         }
 
-        .dropdown-content a:hover {
+       .project-page   .dropdown-content a:hover {
             background-color: #ddd;
         }
 
-        .dropdown:hover .dropdown-content {
+       .project-page   .dropdown:hover .dropdown-content {
             display: block;
         }
 
-        .dropdown:hover .dropbtn {
+        .project-page  .dropdown:hover .dropbtn {
             background-color: #3e8e41;
         }
 
 
-        .slide-in-text {
+        .project-page  .slide-in-text {
             position: fixed;
             top: 50%;
          left: -300;
@@ -95,11 +114,11 @@ display: inline;
             text-align: center;
         }
 
-        .show {
+        .project-page  .show {
             left: 350px;
         }
 
-        .close-btn {
+        .project-page  .close-btn {
             cursor: pointer;
             font-size: 18px;
             font-weight: bold;
@@ -108,64 +127,55 @@ display: inline;
             right: 10px;
             color: white;
         }
-     .heading{
+     .project-page  .heading{
         margin-bottom: 0%;
      }
 
-     .container {
-        padding-top: 5%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center; 
-        width:50%;
-      }
-      .first_item{
+   .project-page   .container {
+    display: flex;
+    justify-content: flex-start; /* or space-around/center */
+    flex-wrap: wrap; /* ensures items go to next line instead of overlapping */
+    width: 100%; 
+}
+
+      .project-page  .first_item{
         margin-left: 1%;
         padding-left: 1%;
       }
       
-      .item {
+      .project-page  .item {
         margin-left: 2%;
         margin-right: 1%;
         width: 300px;
         height: 300px;
       }
       
-      .side-box {
-        position: fixed;
-        top: 0;
-        right: 0;
-        width: 500px;
-        height: 100vh;
-        background-color: #f4f4f4;
-        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
-        padding: 20px;
-        flex-direction: baseline;
-        justify-content: baseline; 
-        align-items: center; 
-        transition: transform 0.3s ease-in-out;
-        transform: translateX(100%);
-        overflow: auto;
-        resize: both; 
-    }
+    .project-page  .side-box {
+    position: fixed; /* ❌ fixed removes it from flow → overlaps everything else */
+    top: 0;
+    right: 0;
+    width: 500px;
+    height: 100vh;
+}
+
     
     
-    .search-box {
+    .project-page  .search-box {
         width: 100%;
         padding: 8px;
         font-size: 14px;
     }
     
     
-    .side-box.active {
+    .project-page  .side-box.active {
         transform: translateX(0); 
       }
     
-    .hidden {
+    .project-page  .hidden {
         display: none;
     }
     
-    .search-box {
+    .project-page  .search-box {
         width: 100%;
         padding: 8px;
         font-size: 14px;
@@ -173,18 +183,18 @@ display: inline;
     }
     
     
-    .box-image {
+    .project-page  .box-image {
         width: 50px; 
         height: auto; 
         margin-bottom: 10px; 
     }
     
-    .search-box {
+    .project-page  .search-box {
         width: 100%;
         padding: 8px;
         font-size: 14px;
     }
-    .close-btnn {
+    .project-page  .close-btnn {
         position: absolute;
         top: 10px;
         right: 10px;
@@ -199,17 +209,17 @@ display: inline;
         transition: background-color 0.3s ease, transform 0.2s ease; 
     }
     
-    .close-btnn:hover {
+    .project-page  .close-btnn:hover {
         background-color: #d62828;
         transform: scale(1.1); 
     }
     
-    .close-btnn:active {
+    .project-page  .close-btnn:active {
         background-color: #a4161a; 
         transform: scale(0.95); 
     }
     
-.custom-card-container {
+ .project-page .custom-card-container {
     display: flex;
     flex-wrap: wrap; 
     gap: 20px; 
@@ -220,56 +230,63 @@ display: inline;
 }
 
 
-.custom-card {
-    width: 18%; 
+
+
+ .project-page .custom-card {
+    width: calc(18% - 16px); /* subtract approximate gap per card */
+    margin: 8px; /* match gap in container */
     border: 1px solid #ccc;
     border-radius: 8px;
-    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
     overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
     background-color: #fff;
-    text-decoration: none; 
+    text-decoration: none;
     color: black;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.custom-card img {
+
+ .project-page .custom-card img {
     width: 100%;
     height: 100px; 
 }
 
-.custom-card-title {
+ .project-page .custom-card-title {
     margin: 10px;
     font-size: 1.2em;
     font-weight: bold;
 }
 
-.custom-card-short-content,
-.custom-card-full-content {
+ .project-page .custom-card-short-content,
+ .project-page .custom-card-full-content {
     margin: 10px;
     font-size: 0.9em;
 }
-#main_anchpr {
+ .project-page #main_anchpr {
     all: unset; 
     color: inherit; 
     text-decoration: none; 
     color: black;
+    padding-top: 3%;
 }
 
 
 
-div{
+
+ .project-page div{
     text-decoration: none;
 }
-.custom-card:hover {
+ .project-page .custom-card:hover {
     transform: scale(1.05);
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
 }
-img{
+ .project-page img{
     width: 50%;
     height: 5%;
+    background-color: #ccc;
 }
 
-.contact-container {
+ .project-page .contact-container {
 
     max-width: 100px;
     margin: 200px auto;
@@ -280,34 +297,34 @@ img{
     text-align: center;
 }
 
-h1 {
+ .project-page h1 {
     color: #2c3e50;
 }
 
-p {
+ .project-page p {
     color: #555;
     font-size: 1.1rem;
     
 }
-.professional-footer {
+ .project-page .professional-footer {
     background-color: #1e2a38;
     padding: 30px 50px;
     color: #ffffff;
 }
 
-.footer-content {
+ .project-page .footer-content {
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-.contact-row {
+ .project-page .contact-row {
     display: flex;
     justify-content: space-between;
     gap: 15px;
 }
 
-.contact-info, .contact-info-single {
+ .project-page .contact-info, .contact-info-single {
     height: 10%;
     flex: 1;
     background-color: #2c3e50;
@@ -316,7 +333,7 @@ p {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.contact-info-single {
+ .project-page .contact-info-single {
     margin: 0 auto; 
 }
 
@@ -343,12 +360,12 @@ p {
     text-align: center;
 }
 
-.container {
+ .project-page .container {
     max-width: 1200px;
     margin: 0 auto;
 }
 
-.contact-section h2 {
+ .project-page .contact-section h2 {
     font-size: 24px;
     margin-bottom: 20px;
     color: #1abc9c;
@@ -370,61 +387,192 @@ p {
 }
 
 
-span {
+ .project-page span {
     font-size: 22px;
     font-weight: normal;
     padding: 0 5px;
     text-decoration: none;
 }
 
-#user {
+ .project-page #user {
     width: 25px;
     height: 25px;
     border-radius: 50%;
     object-fit: cover;
 }
 
-.align-items-center {
-    display: flex;
-}
 
-#main{
-padding-bottom: 15%;
+
+ .project-page #main{
+padding-bottom: 5%;
 
 }
 
+ .project-page .dataverse-header {
+  position: relative;  /* keeps it in normal flow, change to fixed if you want sticky */
+  top: 0;
+  width: 100%;
+  z-index: 9999;
+}
 
-/* 
-.boxes{
-    border: 4px solid #1abc9c; 
-    border-radius: 12px; 
-        padding: 20px;
-    box-shadow: 3px 6px 12px rgba(0, 0, 0, 0.3); 
-    transition: all 0.3s ease; 
-    height: 100%;
-    weight: 100%;
+/* ======= Optional: Remove vertical centering if present ======= */
+ .project-page .heading {
+  margin-top: 0;        /* removes extra top margin */
+     /* horizontal center */
+}
+
+/* Space between navbar and main content */
+ .project-page main {
+  margin-top: 130px; /* Adjust if navbar height changes */
+}
+
+/* Optional: reduce shadow or add hover effect */
+ .project-page .custom-card:hover {
+  transform: scale(1.03);
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.15);
+}
+/* ✅ FIX: Add spacing below navbar and above card section */
+ .project-page .dataverse-header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 9999;
+}
+
+/* Ensure main content sits below fixed header */
+ .project-page main {
+  display: block;
+  margin-top: 180px; /* increase or decrease this value to adjust space */
+  padding-top: 10px; 
+  padding-left: 2px;/* smooth spacing */
+}
+
+/* Optional: ensure cards never hide under navbar */
+ .project-page .custom-card-container {
+  margin-top: 20px;
+}
+
+/* Hide columns initially */
+ .project-page .hidden-column {
+  display: none;
+}
+
+/* Container styling */
+ .project-page .main_div {
+  width: 100%;
+}
+
+ .project-page #main {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 15px;
+}
+
+/* Column styling */
+ .project-page .item.design {
+  flex: 1;
+  min-width: 300px;
+  height: 500px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 15px;
+  background-color: #fdfdfd;
+}
+
+/* First item specific (optional) */
+.first_item.sklearn {
+  /* Any extra styling for code box column */
+}
+
+/* Heading inside code box */
+ .project-page #heading {
+  margin-bottom: 10px;
+  margin-top: 50px!important;
+}
+
+/* Code block inside code box */
+ .project-page #code {
+  font-family: monospace;
+  white-space: pre-wrap;
+}
+ .project-page #main {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 15px; /* keeps space inside the container */
+  gap: 15px; /* spacing between columns */
+}
+
+/* Make sure first column has some space from the container edge */
+ .project-page .item.design:first-child {
+  margin-left: 100px; /* space from the left wall */
+}
+
+/* Maintain spacing between other columns */
+ .project-page .item.design:not(:first-child) {
+  margin-left: 15px;
+}
+ .project-page #datasets {
+  background-color: #f0f8ff96!important; /* light blue */
+}
+
+ .project-page #links {
+  background-color: #f0f8ff96!important; /* lavender */
+}
+
+ .project-page #boxes {
+  background-color: #f0f8ff96!important;
+  display: none!important; /* beige */
+}
+
+ .project-page .scrollable-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;               /* space between cards */
+  max-height: 600px;       /* height of the scroll area */
+  overflow-y: auto;        /* vertical scrollbar */
+  padding: 15px;
+  border: 1px solid #ccc;
+  background-color: #fdfdfd;
+}
+
+/* Optional: hide default scrollbar for cleaner look */
+ .project-page .scrollable-card-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+ .project-page .scrollable-card-container::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.3);
+  border-radius: 4px;
+}
+ .project-page #main_anchor{
+    margin-top: 2350px!important;
+    padding-bottom: px !important;
+  box-sizing: border-box; 
+}
+
+/* Ensure main content is not hidden under fixed navbar */
+ .project-page #heading,  .project-page .custom-card {
+  scroll-margin-top: 120px; /* same as main_anchor padding */
+}
+ .project-page .fixed-top {
+  z-index: 9999 !important;
 }
 
 
-.boxes:hover {
-    border-color: #e67e22; 
-    box-shadow: 6px 10px 20px rgba(0, 0, 0, 0.4); 
-    transform: scale(1.08); 
-}
-    
-.boxes2{
-    border: 40px solid #1abc9c; 
-    border-radius: 12px; 
-    margin: auto;
-    box-shadow: 3px 6px 12px rgba(0, 0, 0, 0.3); 
-    height: 100%;
-    width: 100%;
+/* Optional: if using anchor links */
+ .project-page .custom-card, .project-page  #heading {
+  scroll-margin-top: 120px; /* ensures content isn't hidden when jumping */
 }
 
-
-.boxes2:hover {
-    border-color: #e67e22; 
-    box-shadow: 6px 10px 20px rgba(0, 0, 0, 0.4); 
-    transform: scale(1.08); 
+/* Remove any fixed height & inner scroll */
+ .project-page .parent.custom-card-container {
+  max-height: none;
+  overflow-y: visible;
 }
- */
+ .project-page .custom-card, #heading {
+  scroll-margin-top: 120px; /* ensures top of card isn’t hidden */
+}
+.project-page .navbar{
+    padding: 5px!important;
+    background-color: #000000c1!important;
+}

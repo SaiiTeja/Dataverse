@@ -3,7 +3,26 @@ window.datasets = [
   "iris data sets", "digits datasets", "wine datasets", "20 Newsgroups Dataset", "Diabetes Dataset",
   "Boston Housing Dataset", "Olivetti Faces Dataset", "Covtype Dataset", "fetch_kddcup99", "make_circles"
 ];
+document.addEventListener('DOMContentLoaded', () => {
+  const cards = document.querySelectorAll('.custom-card');
 
+  cards.forEach(card => {
+    card.addEventListener('click', function (e) {
+      e.preventDefault();
+
+      const target = document.querySelector(this.getAttribute('href'));
+      if (!target) return;
+
+      const offset = 100; // Adjust based on your fixed header height
+      const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top,
+        behavior: 'smooth'
+      });
+    });
+  });
+});
 window.dictonary = {
   1: `from sklearn.datasets import load_iris <br>
        iris = load_iris() <br>
@@ -163,7 +182,7 @@ window.copy2 = (num) => {
 
 window.load_datasets = (name, value, program) => {
   const urlDiv = document.getElementById("links");
-  const codeDiv = document.getElementById("code");
+  
   const datasetsDiv = document.getElementById("datasets");
   datasetsDiv.innerHTML = `
     <h2><center>${name}</center></h2>
@@ -184,7 +203,7 @@ window.load_datasets = (name, value, program) => {
     <p>File1: <a href="#" onclick="window.copy(${value})">Copy Link</a></p>
     <p>File2: <a href="#" onclick="window.copy2(${value})">Copy Link</a></p>
   `;
-  codeDiv.innerHTML = program;
+  
 };
 
 window.toggleSideBox = () => {
@@ -203,6 +222,8 @@ window.closeSideBox = () => {
   sideBox.classList.remove("active");
   setTimeout(() => sideBox.classList.add("hidden"), 300);
 };
+
+
 
 window.showLogoutButton = () => {
   if (document.getElementById("logout-btn")) {
@@ -236,8 +257,14 @@ window.addEventListener("load", () => {
   document.querySelectorAll(".parent a").forEach(a => {
     const dataValue = a.getAttribute("data-value");
     a.addEventListener("click", () => {
+      
+      // Show all items
       document.querySelectorAll(".item").forEach(item => item.style.display = "inline");
+      
+      // Load datasets dynamically
       window.load_datasets(window.datasets[dataValue-1], dataValue, window.dictonary[dataValue]);
+      
+      // Update heading
       const head = document.getElementById("heading");
       head.innerHTML = `
         python program using predefined modules
@@ -245,9 +272,20 @@ window.addEventListener("load", () => {
           <p>copy the code here <a class="btn fa-solid fa-copy text-dark" href="#" onclick="window.copycode()"></a></p>
         </fieldset>
       `;
-      ["datasets", "links", "boxes", "main"].forEach(id => {
+      
+      // Add classes
+      ["datasets", "links", "main"].forEach(id => {
         document.getElementById(id).classList.add(id === "main" ? "boxes2" : "boxes");
       });
+
+      // === ADD TOP MARGIN TO CARDS ===
+      const navbar = document.querySelector('.navbar');       // get the fixed navbar
+      const cardsContainer = document.querySelector('.custom-card-container'); // or your cards wrapper
+      if (navbar && cardsContainer) {
+        const navbarHeight = navbar.offsetHeight;             // actual navbar height
+        cardsContainer.style.marginTop = `${navbarHeight + 400}px`; // push cards down
+      }
+
     });
   });
 });
