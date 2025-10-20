@@ -261,29 +261,132 @@ window.copy2 = (num) => {
 
 window.load_datasets = (name, value, program) => {
   const urlDiv = document.getElementById("links");
-  
   const datasetsDiv = document.getElementById("datasets");
+
+  // Helper: show temporary message (optional top-right)
+  const showMessage = (msg) => {
+    const div = document.createElement("div");
+    div.textContent = msg;
+    Object.assign(div.style, {
+      position: "fixed",
+      top: "20px",
+      right: "20px",
+      background: "#333",
+      color: "#fff",
+      padding: "10px 15px",
+      borderRadius: "10px",
+      zIndex: "9999",
+      fontSize: "14px",
+      boxShadow: "0 0 10px rgba(0,0,0,0.3)",
+    });
+    document.body.appendChild(div);
+    setTimeout(() => div.remove(), 2000);
+  };
+
+  // Force download helper
+  window.forceDownload = async (event, url, filename) => {
+    event.preventDefault();
+    try {
+      showMessage("⬇️ Downloading...");
+      const response = await fetch(url);
+      const blob = await response.blob();
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(link.href);
+      showMessage("✅ Download complete!");
+    } catch (error) {
+      showMessage("⚠️ Download failed!");
+      console.error(error);
+    }
+  };
+
+  // Create a single link row with URL and copy button on new line
+  const createLinkRow = (fileName, rawUrl) => {
+    const row = document.createElement("div");
+    row.style.marginBottom = "12px";
+
+    // Link text (blue)
+    const link = document.createElement("a");
+    link.href = rawUrl;
+    link.textContent = fileName;
+    link.target = "_blank";
+    link.style.color = "blue";
+    link.style.fontWeight = "bold";
+    link.style.textDecoration = "underline";
+
+    // Copy button on new line
+    const copyBtn = document.createElement("button");
+    copyBtn.textContent = "📋 Copy";
+    copyBtn.style.marginTop = "4px";
+    copyBtn.style.cursor = "pointer";
+    copyBtn.style.backgroundColor='blue';
+
+    const msg = document.createElement("span");
+    msg.textContent = "Copied!";
+    msg.style.color = "blue";
+    msg.style.fontSize = "12px";
+    msg.style.marginLeft = "8px";
+    msg.style.display = "none";
+
+    copyBtn.onclick = () => {
+      navigator.clipboard.writeText(rawUrl).then(() => {
+        msg.style.display = "inline";
+        setTimeout(() => { msg.style.display = "none"; }, 1500);
+      });
+    };
+
+    row.appendChild(link);
+    row.appendChild(copyBtn);
+    row.appendChild(msg);
+
+    return row;
+  };
+
+  // Build file links dynamically
+  const linkContainer = document.createElement("div");
+
+  const heading = document.createElement("h3");
+  heading.textContent = "Dataset Links";
+  heading.style.textAlign = "center";
+  heading.style.marginBottom = "10px";
+  linkContainer.appendChild(heading);
+
+  if (value <= 10) {
+    // Two files
+    linkContainer.appendChild(
+      createLinkRow(`File1.csv`, `https://raw.githubusercontent.com/SaiiTeja/mini_project/master/datasets/${value}.csv`)
+    );
+    linkContainer.appendChild(
+      createLinkRow(`File2.csv`, `https://raw.githubusercontent.com/SaiiTeja/mini_project/master/datasets/${value}.5.csv`)
+    );
+  } else {
+    // Only one file
+    linkContainer.appendChild(
+      createLinkRow(`File1.csv`, `https://raw.githubusercontent.com/SaiiTeja/mini_project/master/datasets/${value}.csv`)
+    );
+  }
+
+  // Update dataset section
   datasetsDiv.innerHTML = `
     <h2><center>${name}</center></h2>
-    <h3>1. File 1 <a href="datasets/${value}.csv" download class="fa fa-download text-dark"></a></h3>
-    <h3>2. File 2 <a href="datasets/${value}.5.csv" download class="fa fa-download text-dark"></a></h3>
-    <p>Note: File 1 contains 10,000 rows; File 2 contains 1,000 rows.</p>
     <h6>Python Example:</h6>
     <p>
       from sklearn.ensemble import RandomForestClassifier<br>
       import pandas as pd<br>
-      df = pd.read_csv("datasets/1.csv")<br>
+      df = pd.read_csv("datasets/${value}.csv")<br>
       print(df.head())<br>
       model = RandomForestClassifier()
     </p>
   `;
-  urlDiv.innerHTML = `
-    <h3>Links for datasets</h3>
-    <p>File1: <a href="#" onclick="window.copy(${value})">Copy Link</a></p>
-    <p>File2: <a href="#" onclick="window.copy2(${value})">Copy Link</a></p>
-  `;
-  
+
+  urlDiv.innerHTML = ""; // Clear previous
+  urlDiv.appendChild(linkContainer);
 };
+
 
 window.toggleSideBox = () => {
   const sideBox = document.getElementById("side-box");

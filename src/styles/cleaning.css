@@ -1,0 +1,64 @@
+.cleaning-container {
+  max-width: 800px !important;
+  margin: 20px auto !important;
+  padding: 20px !important;
+  font-family: Arial, sans-serif !important;
+  background: #f9f9f9 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+}
+
+.cleaning-container h2 {
+  text-align: center !important;
+  color: #2c3e50 !important;
+}
+
+.cleaning-container form {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 15px !important;
+}
+
+.cleaning-container input {
+  padding: 8px !important;
+  border-radius: 4px !important;
+  border: 1px solid #ccc !important;
+}
+
+.cleaning-container button {
+  padding: 10px !important;
+  background: #3498db !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 5px !important;
+  cursor: pointer !important;
+}
+
+.cleaning-container button:disabled {
+  background: #95a5a6 !important;
+  cursor: not-allowed !important;
+}
+
+.cleaning-container table {
+  border-collapse: collapse !important;
+  width: 100% !important;
+}
+
+.cleaning-container th, .cleaning-container td {
+  border: 1px solid #ccc !important;
+  padding: 8px !important;
+}
+
+.cleaning-container th {
+  background: #ecf0f1 !important;
+}
+
+.download-button {
+  margin-top: 15px !important;
+  padding: 10px !important;
+  background: #2ecc71 !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 5px !important;
+  cursor: pointer !important;
+}
