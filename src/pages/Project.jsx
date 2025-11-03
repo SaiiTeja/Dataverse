@@ -39,6 +39,9 @@ function Project() {
                 <li className="nav-item">
                   <a className="nav-link" href="#" onClick={() => window.showText()}>About</a>
                 </li>
+                 <li className="nav-item">
+                  <a className="nav-link" href="/cleaning">model</a>
+                </li>
                 <li className="nav-item">
                   <a className="nav-link" href="#" onClick={() => window.toggleSideBox()}>AI Box</a>
                 </li>
@@ -48,7 +51,8 @@ function Project() {
                 <li className="nav-item d-flex align-items-center">
                   <a className="nav-link d-flex align-items-center"  href="#" onClick={() => window.showLogoutButton()}>
                     <img src="/images/user.jpeg" id="user" alt="User" />
-                    <span id="username-display" className="ms-2">Sai Teja</span>
+                    <span className='proname'>Nallapanen</span>
+
                   </a>
                 </li>
               </ul>
@@ -199,7 +203,10 @@ function Project() {
         padding: '15px',
         backgroundColor: '#fdfdfd',
       }}
-    ></div>
+      
+    >
+      
+    </div>
 
     {/* Code Box Column */}
     <div
@@ -241,45 +248,74 @@ function Project() {
           ></iframe>
         </div>
       </div>
+      <div id="contacts">
+  <div id="contacts-section">
+    <form>
+      <fieldset>
+        <legend class="project-contact-title">Contact Us</legend>
+        <footer class="project-professional-footer">
+          <div class="project-footer-content">
+
+            <div class="project-contact-row">
+
+              <div class="project-card">
+                <h1 className='text-white'>B.Gopal</h1>
+                <div class="project-card__content">
+                  <p class="project-card__title">B Gopal</p>
+                  <p class="project-card__description">
+                    <strong>Email:</strong> bomminenigopal@gmail.com<br/>
+                    <strong>Phone:</strong> +91 7013639633
+                  </p>
+                </div>
+              </div>
+
+              <div class="project-card">
+                <h1 className='text-white'>N.Sai Teja</h1>
+                <div class="project-card__content">
+                  <p class="project-card__title">N Sai Teja</p>
+                  <p class="project-card__description">
+                    <strong>Email:</strong> nallapanenisaiteja@gmail.com<br/>
+                    <strong>Phone:</strong> +91 9121048098
+                  </p>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="project-contact-row">
+
+              <div class="project-card">
+                <h1 className='text-white'>K. Jagadeesh</h1>
+                <div class="project-card__content">
+                  <p class="project-card__title">K Jagadeesh</p>
+                  <p class="project-card__description">
+                    <strong>Email:</strong> kondakajagadeesh@gmail.com<br/>
+                    <strong>Phone:</strong> +91 9573725129
+                  </p>
+                </div>
+              </div>
+
+              <div class="project-card">
+                <h1 className='text-white'>Jagadeesh</h1>
+                <div class="project-card__content">
+                  <p class="project-card__title">Jagadeesh</p>
+                  <p class="project-card__description">
+                    <strong>Email:</strong> banavathvenkataram@gmail.com<br/>
+                    <strong>Phone:</strong> +91 9398344795
+                  </p>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </footer>
+      </fieldset>
+    </form>
+  </div>
+</div>
 
       {/* Contact Section */}
-      <div id="contacts">
-        <div id="contacts-section">
-          <form>
-            <fieldset>
-              <legend className="contact-title">Contact Us</legend>
-              <footer className="professional-footer">
-                <div className="footer-content">
-                  <div className="contact-row">
-                    <div className="contact-info">
-                      <p><strong>Name:</strong> <span>B Gopal</span></p>
-                      <p><strong>Email:</strong> <span>bomminenigopal@gmail.com</span></p>
-                      <p><strong>Phone:</strong> <span>+91 7013639633</span></p>
-                    </div>
-                    <div className="contact-info">
-                      <p><strong>Name:</strong> <span>N Sai Teja</span></p>
-                      <p><strong>Email:</strong> <span>nallapanenisaiteja@gmail.com</span></p>
-                      <p><strong>Phone:</strong> <span>+91 9121048098</span></p>
-                    </div>
-                  </div>
-                  <div className="contact-row">
-                    <div className="contact-info">
-                      <p><strong>Name:</strong> <span>K Jagadeesh</span></p>
-                      <p><strong>Email:</strong> <span>kondakajagadeesh@gmail.com</span></p>
-                      <p><strong>Phone:</strong> <span>+91 9573725129</span></p>
-                    </div>
-                    <div className="contact-info">
-                      <p><strong>Name:</strong> <span>B Venkata Ram</span></p>
-                      <p><strong>Email:</strong> <span>banavathvenkataram@gmail.com</span></p>
-                      <p><strong>Phone:</strong> <span>+91 9398344795</span></p>
-                    </div>
-                  </div>
-                </div>
-              </footer>
-            </fieldset>
-          </form>
-        </div>
-      </div>
     </div>
   );
 }

@@ -26,8 +26,15 @@ window.login = function () {
     errorEl.style.color = 'green';
     errorEl.innerText = 'Login successful! Redirecting...';
     setTimeout(() => {
-      window.open('/project', '_blank');
-    }, 2000);
+
+// replace this with the value from login input
+localStorage.setItem("proname", username);
+  const projectUrl = '/project'; // your project page path
+  window.open(`/project?user=${encodeURIComponent(username)}`, '_blank');
+
+window.open(projectUrl, '_blank');
+}, 2000);
+
   } else if (!userData) {
     errorEl.innerText = 'Username not found.';
   } else {

@@ -78,6 +78,7 @@ export default function Cleaning() {
     a.download = "cleaned_dataset.csv";
     a.click();
     URL.revokeObjectURL(url);
+    window.location.reload();
   };
 
   return (

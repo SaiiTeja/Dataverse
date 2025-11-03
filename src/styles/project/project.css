@@ -276,11 +276,95 @@ display: inline;
  .project-page div{
     text-decoration: none;
 }
- .project-page .custom-card:hover {
-    transform: scale(1.05);
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+/* ===========================
+   MODERN FLAT LUXE HOVER EFFECT
+   =========================== */
+
+.project-page .custom-card {
+  position: relative;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  transition: box-shadow 0.5s ease, filter 0.4s ease;
+  will-change: box-shadow, filter;
 }
- .project-page img{
+
+/* Subtle flat hover: glow + light depth */
+.project-page .custom-card:hover {
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25), 
+              0 0 20px rgba(255, 255, 255, 0.1);
+  filter: brightness(1.08);
+}
+
+/* Refined shimmer lighting */
+.project-page .custom-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 40% 30%,
+    rgba(255, 255, 255, 0.25),
+    rgba(255, 255, 255, 0.05) 60%,
+    transparent 80%
+  );
+  opacity: 0;
+  transition: opacity 0.6s ease-in-out;
+  pointer-events: none;
+}
+
+.project-page .custom-card:hover::after {
+  opacity: 1;
+}
+
+/* Elegant diagonal light sweep */
+.project-page .custom-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.4) 40%,
+    transparent 100%
+  );
+  transform: translateX(-100%) rotate(5deg);
+  transition: transform 0.9s ease-in-out;
+  pointer-events: none;
+}
+
+.project-page .custom-card:hover::before {
+  transform: translateX(100%) rotate(5deg);
+}
+
+/* Optional subtle breathing glow */
+@keyframes softPulse {
+  0% {
+    box-shadow:
+      0 15px 35px rgba(0, 0, 0, 0.35),       /* deep base shadow */
+      0 0 20px rgba(64, 224, 208, 0.15),     /* turquoise glow */
+      0 0 40px rgba(255, 255, 255, 0.08);    /* soft white aura */
+  }
+  50% {
+    box-shadow:
+      0 25px 60px rgba(0, 0, 0, 0.45),
+      0 0 30px rgba(64, 224, 208, 0.25),
+      0 0 60px rgba(255, 255, 255, 0.15);
+  }
+  100% {
+    box-shadow:
+      0 15px 35px rgba(0, 0, 0, 0.35),
+      0 0 20px rgba(64, 224, 208, 0.15),
+      0 0 40px rgba(255, 255, 255, 0.08);
+  }
+}
+
+
+.project-page .custom-card:hover {
+  animation: softPulse 4s ease-in-out infinite alternate;
+}
+
+
+.project-page img{
     width: 50%;
     height: 5%;
     background-color: #ccc;
@@ -586,4 +670,173 @@ color: #3498db!important;
 }
 #navbarNav a:hover{
 color: #6bc4ff4b!important;
+}
+
+/* From Uiverse.io by Dailleer — customized with project prefix */
+.project-card {
+  position: relative;
+  
+  width: 300px;
+  height: 200px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #111;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Animated RGB border effect */
+.project-card::before {
+  color: white;
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 3px; /* thickness of border */
+  border-radius: 15px;
+  background: linear-gradient(
+    45deg,
+    #ff0000,
+    #ff7300,
+    #fffb00,
+    #48ff00,
+    #00ffd5,
+    #002bff,
+    #7a00ff,
+    #ff00c8,
+    #ff0000
+  );
+  background-size: 400%;
+  animation: project-rgbRotate 6s linear infinite;
+  mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude; /* For Chrome/Safari */
+  -webkit-mask-composite: destination-out; /* For WebKit browsers */
+}
+
+/* Inner content styling */
+.project-card__content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  background: linear-gradient(135deg, #ffffff, #807b7b);
+  opacity: 0;
+  border-radius: 12px;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.project-card:hover .project-card__content {
+  transform: translate(-50%, -50%) rotate(0deg);
+  opacity: 1;
+}
+
+/* Smooth rotation for the gradient border */
+@keyframes project-rgbRotate {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
+.project-card svg {
+  width: 48px;
+  fill: #333;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.project-card:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.project-card__content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #ffffffd6;
+  opacity: 0;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.project-card:hover .project-card__content {
+  transform: translate(-50%, -50%) rotate(0deg);
+  opacity: 1;
+}
+
+.project-card__title {
+  margin: 0;
+  font-size: 24px;
+  color: #333;
+  font-weight: 700;
+}
+
+.project-card__description {
+  margin: 10px 0 0;
+  font-size: 14px;
+  color: #777;
+  line-height: 1.4;
+}
+
+.project-card:hover svg {
+  scale: 0;
+  transform: rotate(-45deg);
+}
+
+/* Container layout for project cards */
+.project-footer-content {
+  display: flex;
+  flex-wrap: wrap;       /* allows wrapping on smaller screens */
+  justify-content: center;
+  gap: 20px;             /* spacing between cards */
+  padding: 20px;
+}
+
+.project-contact-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+/* Card container layout */
+.project-footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+  padding: 20px;
+  justify-items: center;
+}
+
+/* Ensure each row section uses full width */
+.project-contact-row {
+  width: 100%;
+  display: contents; /* lets the grid handle placement directly */
+}
+
+/* Optional: Make sure the cards adapt well */
+.project-card {
+  width: 100%;
+  max-width: 300px;
+}
+#contacts{
+  background-color: #777!important;
+}
+#contacts-section{
+  background-color: #777!important;
 }

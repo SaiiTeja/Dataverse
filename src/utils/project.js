@@ -1,3 +1,46 @@
+const cards = document.querySelectorAll(".project-page .custom-card");
+
+cards.forEach(card => {
+  card.addEventListener("mousemove", e => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const midX = rect.width / 2;
+    const midY = rect.height / 2;
+
+    // Tilt calculation
+    const rotateX = ((y - midY) / midY) * 12;
+    const rotateY = ((x - midX) / midX) * 12;
+
+    card.style.transform = `rotateX(${-rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+
+    // Update shine position
+    card.style.setProperty("--shine-x", `${x}px`);
+    card.style.setProperty("--shine-y", `${y}px`);
+  });
+
+  card.addEventListener("mouseleave", () => {
+    card.style.transform = "rotateX(0deg) rotateY(0deg) scale(1)";
+    card.style.setProperty("--shine-x", `50%`);
+    card.style.setProperty("--shine-y", `50%`);
+  });
+});
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const spans = document.getElementsByClassName("proname");
+  const storedUser = localStorage.getItem('proname');
+  const span = document.querySelector('.proname');
+if (span) span.innerText = storedUser;
+
+
+  if (storedUser && spans.length > 0) {
+    for (let i = 0; i < spans.length; i++) {
+      spans[i].innerText = storedUser; // set the username
+    }
+  }
+});
+
 // Datasets and code dictionary
 window.datasets = [
   "iris data sets",
@@ -258,133 +301,226 @@ window.copy2 = (num) => {
   navigator.clipboard.writeText(`https://raw.githubusercontent.com/SaiiTeja/mini_project/refs/heads/master/login/project/datasets/${num}.5.csv`)
     .then(() => alert("Copied to clipboard"));
 };
-
 window.load_datasets = (name, value, program) => {
   const urlDiv = document.getElementById("links");
   const datasetsDiv = document.getElementById("datasets");
 
-  // Helper: show temporary message (optional top-right)
-  const showMessage = (msg) => {
-    const div = document.createElement("div");
-    div.textContent = msg;
-    Object.assign(div.style, {
+  if (!datasetsDiv || !urlDiv) {
+    console.warn("Missing #datasets or #links element.");
+    return;
+  }
+
+  // parse index (data-value from cards is 1-based string)
+  const idx = Number.parseInt(value, 10);
+
+  // toast helper
+  const showMessage = (msg, duration = 1400) => {
+    const t = document.createElement("div");
+    t.textContent = msg;
+    Object.assign(t.style, {
       position: "fixed",
-      top: "20px",
-      right: "20px",
-      background: "#333",
+      top: "18px",
+      right: "18px",
+      padding: "8px 12px",
+      background: "#222",
       color: "#fff",
-      padding: "10px 15px",
-      borderRadius: "10px",
-      zIndex: "9999",
-      fontSize: "14px",
-      boxShadow: "0 0 10px rgba(0,0,0,0.3)",
+      borderRadius: "8px",
+      zIndex: 99999,
+      fontSize: "13px",
+      boxShadow: "0 3px 8px rgba(0,0,0,0.2)"
     });
-    document.body.appendChild(div);
-    setTimeout(() => div.remove(), 2000);
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), duration);
   };
 
-  // Force download helper
-  window.forceDownload = async (event, url, filename) => {
-    event.preventDefault();
+  // download helper
+  const forceDownload = async (url, filename) => {
     try {
       showMessage("⬇️ Downloading...");
-      const response = await fetch(url);
-      const blob = await response.blob();
-      const link = document.createElement("a");
-      link.href = URL.createObjectURL(blob);
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(link.href);
-      showMessage("✅ Download complete!");
-    } catch (error) {
-      showMessage("⚠️ Download failed!");
-      console.error(error);
+      const resp = await fetch(url);
+      if (!resp.ok) throw new Error("Network error");
+      const blob = await resp.blob();
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(a.href);
+      showMessage("✅ Download complete");
+    } catch (err) {
+      console.error(err);
+      showMessage("⚠️ Download failed");
     }
   };
 
-  // Create a single link row with URL and copy button on new line
-  const createLinkRow = (fileName, rawUrl) => {
-    const row = document.createElement("div");
-    row.style.marginBottom = "12px";
+  // raw base path (your existing pattern)
+  const baseRaw = "https://raw.githubusercontent.com/SaiiTeja/mini_project/master/datasets/";
 
-    // Link text (blue)
-    const link = document.createElement("a");
-    link.href = rawUrl;
-    link.textContent = fileName;
-    link.target = "_blank";
-    link.style.color = "blue";
-    link.style.fontWeight = "bold";
-    link.style.textDecoration = "underline";
+  // helper to build link UI block (raw link + copy button below)
+  const buildLinkBlock = (label, rawUrl) => {
+    const block = document.createElement("div");
+    block.style.marginBottom = "12px";
 
-    // Copy button on new line
+    // raw link (full URL displayed)
+    const a = document.createElement("a");
+    a.href = rawUrl;
+    a.target = "_blank";
+    a.rel = "noreferrer";
+    a.textContent = rawUrl;              // show raw url text
+    a.style.display = "block";
+    a.style.wordBreak = "break-all";
+    a.style.fontSize = "13px";
+    a.style.marginBottom = "6px";
+
+    // copy button only (below the raw link)
+    const heading =document.createElement("h2")
     const copyBtn = document.createElement("button");
+    heading.textContent="Links"
     copyBtn.textContent = "📋 Copy";
-    copyBtn.style.marginTop = "4px";
-    copyBtn.style.cursor = "pointer";
-    copyBtn.style.backgroundColor='blue';
-
-    const msg = document.createElement("span");
-    msg.textContent = "Copied!";
-    msg.style.color = "blue";
-    msg.style.fontSize = "12px";
-    msg.style.marginLeft = "8px";
-    msg.style.display = "none";
-
+    copyBtn.title = `Copy ${label} URL`;
+    Object.assign(heading.style, {
+      cursor: "pointer",
+      padding: "16px 18px",
+      borderRadius: "6px",
+      border: "1px solid #ede5e5ff",
+      background: "#ece5e5f1",
+      fontSize: "20px"
+    });
+    Object.assign(copyBtn.style, {
+      cursor: "pointer",
+      padding: "6px 8px",
+      borderRadius: "6px",
+      border: "1px solid #ddd",
+      background: "#fff",
+      fontSize: "13px"
+    });
     copyBtn.onclick = () => {
-      navigator.clipboard.writeText(rawUrl).then(() => {
-        msg.style.display = "inline";
-        setTimeout(() => { msg.style.display = "none"; }, 1500);
-      });
+      navigator.clipboard.writeText(rawUrl)
+        .then(() => showMessage("Copied link to clipboard"))
+        .catch(() => showMessage("⚠️ Copy failed"));
     };
-
-    row.appendChild(link);
-    row.appendChild(copyBtn);
-    row.appendChild(msg);
-
-    return row;
+    block.appendChild(heading)
+    block.appendChild(a);
+    block.appendChild(copyBtn);
+    return block;
   };
 
-  // Build file links dynamically
-  const linkContainer = document.createElement("div");
+  // Build the links area (left/urlDiv)
+  urlDiv.innerHTML = ""; // clear previous
+  const linksWrapper = document.createElement("div");
+  linksWrapper.style.padding = "8px";
 
-  const heading = document.createElement("h3");
-  heading.textContent = "Dataset Links";
-  heading.style.textAlign = "center";
-  heading.style.marginBottom = "10px";
-  linkContainer.appendChild(heading);
+  // Only proceed when index valid and > 0; else show fallback
+  if (!Number.isNaN(idx) && idx >= 1) {
+    // always show File1 raw link
+    const file1Url = `${baseRaw}${idx}.csv`;
+    linksWrapper.appendChild(buildLinkBlock("File1.csv", file1Url));
 
-  if (value <= 10) {
-    // Two files
-    linkContainer.appendChild(
-      createLinkRow(`File1.csv`, `https://raw.githubusercontent.com/SaiiTeja/mini_project/master/datasets/${value}.csv`)
-    );
-    linkContainer.appendChild(
-      createLinkRow(`File2.csv`, `https://raw.githubusercontent.com/SaiiTeja/mini_project/master/datasets/${value}.5.csv`)
-    );
+    // show File2 raw link only for 1..10
+    if (idx <= 10) {
+      const file2Url = `${baseRaw}${idx}.5.csv`;
+      linksWrapper.appendChild(buildLinkBlock("File2.csv", file2Url));
+    }
   } else {
-    // Only one file
-    linkContainer.appendChild(
-      createLinkRow(`File1.csv`, `https://raw.githubusercontent.com/SaiiTeja/mini_project/master/datasets/${value}.csv`)
-    );
+    const info = document.createElement("div");
+    info.textContent = "No file links available for this selection.";
+    linksWrapper.appendChild(info);
   }
 
-  // Update dataset section
-  datasetsDiv.innerHTML = `
-    <h2><center>${name}</center></h2>
-    <h6>Python Example:</h6>
-    <p>
-      from sklearn.ensemble import RandomForestClassifier<br>
-      import pandas as pd<br>
-      df = pd.read_csv("datasets/${value}.csv")<br>
-      print(df.head())<br>
-      model = RandomForestClassifier()
-    </p>
-  `;
+  urlDiv.appendChild(linksWrapper);
 
-  urlDiv.innerHTML = ""; // Clear previous
-  urlDiv.appendChild(linkContainer);
+  // Build the datasets panel (right side) — show title + download symbol buttons
+  datasetsDiv.innerHTML = ""; // clear previous
+
+  const panel = document.createElement("div");
+  Object.assign(panel.style, {
+    padding: "14px",
+    borderRadius: "8px",
+    background: "#fff",
+    border: "1px solid #e9e9e9"
+  });
+
+  const title = document.createElement("h3");
+  title.innerHTML = `<center>${name || "Dataset"}</center>`;
+  title.style.marginTop = "0";
+  panel.appendChild(title);
+
+  // downloads container
+  const downloads = document.createElement("div");
+  downloads.style.display = "flex";
+  downloads.style.gap = "10px";
+  downloads.style.justifyContent = "center";
+  downloads.style.alignItems = "center";
+  downloads.style.marginTop = "14px";
+
+  // helper to create a download-icon button
+  const createDownloadButton = (label, url) => {
+    const btn = document.createElement("button");
+    btn.innerHTML = `⬇️ <span style="margin-left:6px;font-size:13px">${label}</span>`;
+    btn.title = `Download ${label}`;
+    Object.assign(btn.style, {
+      cursor: "pointer",
+      padding: "8px 12px",
+      borderRadius: "8px",
+      border: "none",
+      background: "#007bff",
+      color: "#fff",
+      fontSize: "14px",
+      display: "flex",
+      alignItems: "center",
+      gap: "6px"
+    });
+    btn.onclick = () => forceDownload(url, `${(name || "dataset").replace(/\s+/g, "_")}_${label.replace(/\s+/g, "_")}.csv`);
+    return btn;
+  };
+
+  if (!Number.isNaN(idx) && idx >= 1) {
+    // File1
+    const f1 = `${baseRaw}${idx}.csv`;
+    downloads.appendChild(createDownloadButton("File1", f1));
+
+    // File2 for 1..10
+    if (idx <= 10) {
+      const f2 = `${baseRaw}${idx}.5.csv`;
+      downloads.appendChild(createDownloadButton("File2", f2));
+    }
+  } else {
+    const note = document.createElement("div");
+    note.textContent = "No downloadable files for this selection.";
+    downloads.appendChild(note);
+  }
+
+  panel.appendChild(downloads);
+
+  // optional quick copy-of-both links row (small icons) - unobtrusive
+  const quickRow = document.createElement("div");
+  quickRow.style.marginTop = "12px";
+  quickRow.style.display = "flex";
+  quickRow.style.justifyContent = "center";
+  quickRow.style.gap = "8px";
+
+  if (!Number.isNaN(idx) && idx >= 1) {
+    const quickCopy1 = document.createElement("button");
+    quickCopy1.textContent = "Copy File1 URL";
+    quickCopy1.onclick = () => {
+      navigator.clipboard.writeText(`${baseRaw}${idx}.csv`).then(() => showMessage("File1 link copied"));
+    };
+    quickRow.appendChild(quickCopy1);
+
+    if (idx <= 10) {
+      const quickCopy2 = document.createElement("button");
+      quickCopy2.textContent = "Copy File2 URL";
+      quickCopy2.onclick = () => {
+        navigator.clipboard.writeText(`${baseRaw}${idx}.5.csv`).then(() => showMessage("File2 link copied"));
+      };
+      quickRow.appendChild(quickCopy2);
+    }
+  }
+
+  panel.appendChild(quickRow);
+
+  datasetsDiv.appendChild(panel);
 };
 
 
@@ -470,4 +606,82 @@ window.addEventListener("load", () => {
 
     });
   });
+});
+// project.js — username & logout handling (drop-in)
+
+// ========================== USER LOGIN HANDLING ==========================
+
+// Called when user logs in; updates storage and UI
+window.handleLoginSuccess = (username) => {
+  const spans = document.getElementsByClassName("proname");
+  if (!spans || spans.length === 0) return;
+
+  // Prefer using the passed username, fallback to stored value
+  const proname = username || localStorage.getItem("proname");
+
+  for (let i = 0; i < spans.length; i++) {
+    spans[i].innerText = proname || ""; // replace "Sai Teja" if needed
+  }
+
+  console.log(proname);
+};
+
+// Logout — remove stored username and close the page
+window.logout = () => {
+  localStorage.removeItem('proname');
+
+  // Try to close the page; fallback to redirect if blocked
+  try {
+    window.close();
+    setTimeout(() => {
+      if (!window.closed) window.location.href = '/';
+    }, 400);
+  } catch (e) {
+    window.location.href = '/';
+  }
+};
+
+// Toggle inline logout button next to username
+window.showLogoutButton = () => {
+  const spans = document.getElementsByClassName('proname');
+  if (!spans || spans.length === 0) return;
+
+  // We'll attach the logout button after the first span
+  const usernameSpan = spans[0];
+  let logoutBtn = document.getElementById('logout-btn');
+
+  if (!logoutBtn) {
+    // create logout button
+    logoutBtn = document.createElement('button');
+    logoutBtn.id = 'logout-btn';
+    logoutBtn.type = 'button';
+    logoutBtn.textContent = 'Logout';
+    logoutBtn.className = 'btn btn-sm btn-outline-danger ms-2';
+    logoutBtn.style.cursor = 'pointer';
+    logoutBtn.addEventListener('click', window.logout);
+
+    usernameSpan.insertAdjacentElement('afterend', logoutBtn);
+  } else {
+    // toggle visibility
+    logoutBtn.style.display = logoutBtn.style.display === 'none' ? 'inline-block' : 'none';
+  }
+};
+
+// ========================== INITIALIZATION ==========================
+
+document.addEventListener('DOMContentLoaded', () => {
+  const spans = document.getElementsByClassName('proname');
+  if (!spans || spans.length === 0) return;
+
+  // Make username clickable to toggle logout button
+  for (let i = 0; i < spans.length; i++) {
+    spans[i].style.cursor = 'pointer';
+    spans[i].addEventListener('click', window.showLogoutButton);
+  }
+
+  // Set stored username if exists
+  const storedUser = localStorage.getItem('proname');
+  if (storedUser) {
+    window.handleLoginSuccess(storedUser);
+  }
 });

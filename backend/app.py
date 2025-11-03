@@ -1,33 +1,91 @@
-import pandas as pd
+# app.py
 import re
-from flask import Flask, request, jsonify
+import html as html_lib
+from flask import Flask, request, jsonify, Response
 from flask_cors import CORS
+import pandas as pd
+import numpy as np
 
 app = Flask(__name__)
 CORS(app)
 
+# --- Helpers ---
+IMAGE_EXT_RE = re.compile(r'\.(jpg|jpeg|png|gif|bmp|webp)$', re.IGNORECASE)
+IMAGE_ID_RE = re.compile(r'^(image|img|photo|thumbnail|landingurl)[_\-]?\d*$', re.IGNORECASE)
+
+
+def normalize_colname(c):
+    return str(c).strip().lower().replace(" ", "_")
+
+
+def detect_image_columns(df):
+    """Detect columns likely to contain image URLs."""
+    image_cols = []
+    for col in df.columns:
+        if not (df[col].dtype == object or pd.api.types.is_string_dtype(df[col])):
+            continue
+
+        col_lower = col.lower()
+        if any(k in col_lower for k in ("image", "img", "photo", "thumbnail", "url", "landingurl")):
+            image_cols.append(col)
+            continue
+
+        sample = df[col].dropna().astype(str).head(100).tolist()
+        for v in sample:
+            s = v.strip()
+            if s.lower().startswith(("http://", "https://")) and IMAGE_EXT_RE.search(s):
+                image_cols.append(col)
+                break
+    return image_cols
+
+
+def build_preview_html(df, image_cols, max_w=160, max_h=160):
+    """Render preview table with image tags for URL columns."""
+    headers = [html_lib.escape(str(c)) for c in df.columns]
+    rows_html = []
+
+    for _, row in df.iterrows():
+        cells = []
+        for c in df.columns:
+            val = row[c]
+            if pd.isna(val) or val == "":
+                cells.append("<td></td>")
+                continue
+
+            if c in image_cols:
+                url = str(val).strip()
+                if url.lower().startswith(("http://", "https://")):
+                    cells.append(
+                        f"<td><img src='{html_lib.escape(url)}' "
+                        f"style='max-width:{max_w}px;max-height:{max_h}px;border-radius:6px;border:1px solid #ccc;' "
+                        f"alt='image'/></td>"
+                    )
+                else:
+                    cells.append(f"<td>{html_lib.escape(url)}</td>")
+            else:
+                cells.append(f"<td>{html_lib.escape(str(val))}</td>")
+        rows_html.append("<tr>" + "".join(cells) + "</tr>")
+
+    html = f"""
+    <div style="font-family: Arial, Helvetica, sans-serif; margin:8px;">
+      <table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse;">
+        <thead><tr>{"".join(f"<th>{h}</th>" for h in headers)}</tr></thead>
+        <tbody>{"".join(rows_html)}</tbody>
+      </table>
+    </div>
+    """
+    return html
+
+
+# --- Routes ---
 @app.route("/api/clean_dataset", methods=["POST"])
 def clean_dataset():
     try:
-        # Get file or URL
         file = request.files.get("file")
         url = request.form.get("url")
+        preview_flag = str(request.form.get("preview", "false")).lower() in ("1", "true", "yes")
 
-        # Columns to keep during cleaning
-        columns_raw = request.form.get("columns_to_keep")
-        columns_to_keep = [col.strip() for col in columns_raw.split(",")] if columns_raw else None
-
-        # Number of rows in final dataset
-        final_rows_raw = request.form.get("final_rows")
-        final_rows = int(final_rows_raw) if final_rows_raw and final_rows_raw.isdigit() else 20
-        if final_rows < 1:
-            final_rows = 20
-
-        # Final columns for downloadable dataset
-        final_cols_raw = request.form.get("final_cols")
-        final_cols = [col.strip() for col in final_cols_raw.split(",")] if final_cols_raw else None
-
-        # Load dataset
+        # Load dataset safely
         if file:
             df = pd.read_csv(file)
         elif url:
@@ -35,46 +93,66 @@ def clean_dataset():
         else:
             return jsonify({"error": "No file or URL provided"}), 400
 
-        # -------------------- Preprocessing --------------------
-        df = df.drop_duplicates()
-        df = df.dropna(how='all')  # drop rows where all elements are NaN
-
-        # Keep only requested columns during cleaning
-        if columns_to_keep:
-            df = df[[col for col in columns_to_keep if col in df.columns]]
-
-        # Fill numeric NaNs with mean
-        for col in df.select_dtypes(include=['float64', 'int64']).columns:
-            df[col] = df[col].fillna(df[col].mean())
-
-        # Fill string NaNs with 'unknown'
-        for col in df.select_dtypes(include='object').columns:
-            df[col] = df[col].fillna('unknown')
-
-        # Clean string columns
-        for col in df.select_dtypes(include='object').columns:
-            df[col] = df[col].str.strip().str.lower()
-            df[col] = df[col].apply(lambda x: re.sub(r'[^a-zA-Z0-9\s]', '', x))
-
         # Normalize column names
-        df.columns = [c.strip().lower().replace(" ", "_") for c in df.columns]
+        df = df.rename(columns={c: normalize_colname(c) for c in df.columns})
+        df = df.drop_duplicates().dropna(how='all')
 
-        # -------------------- Final dataset selection --------------------
-        # Limit columns to final_cols if provided, otherwise keep all
-        if final_cols:
-            valid_cols = [col for col in final_cols if col in df.columns]
-            if valid_cols:
-                df = df[valid_cols]
+        # Replace NaN/inf safely
+        df = df.replace([np.inf, -np.inf], np.nan)
 
-        # Limit rows to final_rows, or maximum available
-        if final_rows > len(df):
-            final_rows = len(df)
-        df = df.head(final_rows)
+        # Fill missing numeric with mean
+        for col in df.select_dtypes(include=["number"]).columns:
+            mean_val = df[col].mean() if not pd.isna(df[col].mean()) else 0
+            df[col] = df[col].fillna(mean_val)
 
-        return jsonify(df.to_dict(orient="records"))
+        # Fill missing strings with ""
+        for col in df.select_dtypes(include=["object", "string"]).columns:
+            df[col] = df[col].fillna("")
+
+        # Detect image URLs (Thumbnail300KURL etc.)
+        image_columns = detect_image_columns(df)
+        df_head = df.head(20)
+
+        # Convert NaN, NaT, etc. to strings to make valid JSON
+        df_head = df_head.where(pd.notnull(df_head), "")
+
+        # If preview is requested, return JSON with embedded HTML
+        if preview_flag:
+            preview_html = build_preview_html(df_head, image_columns)
+            payload = {
+                "cleaned_data": df_head.to_dict(orient="records"),
+                "image_columns": image_columns,
+                "preview_html": preview_html
+            }
+            return jsonify(payload)
+
+        # Otherwise return JSON only (no HTML)
+        return jsonify(df_head.to_dict(orient="records"))
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+@app.route("/preview/html", methods=["POST"])
+def preview_html_endpoint():
+    try:
+        file = request.files.get("file")
+        url = request.form.get("url")
+        if file:
+            df = pd.read_csv(file)
+        elif url:
+            df = pd.read_csv(url)
+        else:
+            return Response("<p>No file or URL provided</p>", status=400, mimetype="text/html")
+
+        df = df.rename(columns={c: normalize_colname(c) for c in df.columns})
+        df = df.replace([np.inf, -np.inf], np.nan).fillna("")
+        image_columns = detect_image_columns(df)
+        df = df.head(20)
+        html = build_preview_html(df, image_columns)
+        return Response(html, mimetype="text/html")
+    except Exception as e:
+        return Response(f"<pre>Error: {html_lib.escape(str(e))}</pre>", mimetype="text/html", status=500)
 
 
 if __name__ == "__main__":
